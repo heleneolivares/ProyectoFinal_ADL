@@ -6,18 +6,22 @@ import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import "react-toastify/dist/ReactToastify.css";
+import { UserProvider } from "./context/UserContext";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
     return (
-        <div className="min-h-screen bg-gray-100">
-            <Navbar />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            </Routes>
-        </div>
+        <UserProvider>
+            <CartProvider>
+                <Navbar />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                </Routes>
+            </CartProvider>
+        </UserProvider>
     );
 }
 
