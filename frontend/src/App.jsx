@@ -5,11 +5,13 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
-import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "./context/UserContext";
 import { CartProvider } from "./context/CartContext";
 
+import "./assets/css/base.css"
+
 function App() {
+    
     return (
         <UserProvider>
             <CartProvider>
