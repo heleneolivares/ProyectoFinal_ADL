@@ -1,0 +1,11 @@
+/* Light mode: Dark arrows */
+.light-mode-arrow .carousel-control-prev-icon,
+.light-mode-arrow .carousel-control-next-icon {
+    filter: invert(1); /* Makes the arrows dark */
+}
+
+/* Dark mode: Default Bootstrap white arrows */
+.dark-mode-arrow .carousel-control-prev-icon,
+.dark-mode-arrow .carousel-control-next-icon {
+    filter: none;
+}
