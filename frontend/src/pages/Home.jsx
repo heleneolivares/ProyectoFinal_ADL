@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 
 const Home = () => {
-    <main>
-        <h1>Hola!!</h1>
-    </main>
+    return(
+        <h1>Home</h1>
+    );
 }
 export default Home;

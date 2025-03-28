@@ -9,6 +9,8 @@ const Login = () => {
     const [error, setError] = useState("");
 
     return (
+        <main>
+        <h1>Login</h1>
         <Formik
             initialValues={{ email: "", password: "" }}
             validationSchema={Yup.object({
@@ -17,11 +19,11 @@ const Login = () => {
             })}
             onSubmit={async (values, { setSubmitting }) => {
                 try {
-                const res = await api.post("/auth/login", values);
-                localStorage.setItem("token", res.data.token);
-                navigate("/profile");
+                    const res = await api.post("/auth/login", values);
+                    localStorage.setItem("token", res.data.token);
+                    navigate("/profile");
                 } catch (err) {
-                setError("Credenciales incorrectas");
+                    setError("Credenciales incorrectas");
                 }
                 setSubmitting(false);
             }}
@@ -41,6 +43,7 @@ const Login = () => {
             </Form>
         )}
         </Formik>
+        </main>
     );
 };
 

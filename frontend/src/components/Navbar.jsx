@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; 
 
 export default function NavBar() {
     const [darkMode, setDarkMode] = useState(false);
@@ -15,6 +16,7 @@ export default function NavBar() {
     }, [darkMode]);
 
     return (
+        <>
         <nav className={`navbar navbar-expand-lg ${darkMode ? "bg-dark navbar-dark" : "bg-light navbar-light"}`}>
             <div className="container-fluid">
                 {/* Botón para colapsar en móviles */}
@@ -23,29 +25,31 @@ export default function NavBar() {
                 </button>
 
                 {/* Logo */}
-                <a className="navbar-brand" href="#">PopVerse</a>
+                <Link className="navbar-brand" to="/">PopVerse</Link>
 
                 {/* Contenido del navbar */}
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Login</a>
+                            <Link className="nav-link" to="/login">Login</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Wishlist</a>
+                            <Link className="nav-link" to="/wishlist">Wishlist</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Cart</a>
+                            <button className="nav-link btn btn-link" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                                Cart
+                            </button>
                         </li>
                     </ul>
 
                     {/* Barra de búsqueda */}
-                    <div className="container mt-3">
+                    <div className="container mt-2">
                         <div className="d-flex justify-content-center">
                             <div className="input-group" style={{ maxWidth: "800px", width: "100%" }}>
-                                <input className="form-control text-center fs-4 border-0 bg-light" type="text" placeholder="Buscador" aria-label="Search"/>
-                                <button className="btn btn-outline-light">
-                                    <i className="bi bi-search fs-4"></i>
+                                <input className={`form-control text-center fs-5 border-0 ${darkMode ? "bg-light":"bg-outline" }`} type="text" placeholder="Buscador" aria-label="Search"/>
+                                <button className={`btn ${darkMode ? "btn-light" : "btn-dark"} border-0`}>
+                                    <i className="bi bi-search fs-5"></i>
                                 </button>
                             </div>
                         </div>
@@ -58,5 +62,17 @@ export default function NavBar() {
                 </div>
             </div>
         </nav>
+
+        <div className={`offcanvas offcanvas-end ${darkMode ? "bg-dark text-light" : "bg-light text-dark"}`} tabIndex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
+            <div className="offcanvas-header">
+                <h5 className="offcanvas-title" id="cartOffcanvasLabel">🛒 Tu Carrito</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div className="offcanvas-body">
+                <p>Aquí aparecerán los productos en el carrito...</p>
+                <button className="btn btn-success w-100">Finalizar compra</button>
+            </div>
+        </div>
+        </>
     );
 }
