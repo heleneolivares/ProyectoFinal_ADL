@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom"; 
 
-export default function NavBar() {
-    const [darkMode, setDarkMode] = useState(false);
+export default function Navbar({ darkMode, setDarkMode }) {
 
     useEffect(() => {
         // Aplica el modo oscuro/claro al body

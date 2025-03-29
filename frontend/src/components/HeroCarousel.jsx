@@ -6,10 +6,10 @@ export default function HeroCarousel({ darkMode }) {
         <div id="heroCarousel" className="carousel slide" data-bs-ride="carousel">
             {/* Carousel Indicators */}
             <div className="carousel-indicators">
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" className="active"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" className={darkMode ? "active dark-indicator" : "active light-indicator"}></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" className={darkMode ? "dark-indicator" : "light-indicator"}></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" className={darkMode ? "dark-indicator" : "light-indicator"}></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3" className={darkMode ? "dark-indicator" : "light-indicator"}></button>
             </div>
 
             {/* Carousel Items */}
@@ -29,21 +29,11 @@ export default function HeroCarousel({ darkMode }) {
             </div>
 
             {/* Navigation Arrows */}
-            <button 
-                className={`carousel-control-prev ${darkMode ? "light-mode-arrow" : "dark-mode-arrow"}`} 
-                type="button" 
-                data-bs-target="#heroCarousel" 
-                data-bs-slide="prev"
-            >
-                <span className="carousel-control-prev-icon"></span>
+            <button className="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span className={`carousel-control-prev-icon ${darkMode ? "dark-arrow" : "light-arrow"}`}></span>
             </button>
-            <button 
-                className={`carousel-control-next ${darkMode ? "light-mode-arrow" : "dark-mode-arrow"}`} 
-                type="button" 
-                data-bs-target="#heroCarousel" 
-                data-bs-slide="next"
-            >
-                <span className="carousel-control-next-icon"></span>
+            <button className="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span className={`carousel-control-next-icon ${darkMode ? "dark-arrow" : "light-arrow"}`}></span>
             </button>
         </div>
     );
