@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 import Wishlist from "./pages/Wishlist";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
+import Category from "./components/Category";
 import { UserProvider } from "./context/UserContext";
 import { CartProvider } from "./context/CartContext";
 
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                <Route path="/category/:categoryName" element={<Category darkMode={darkMode} />} />
             </Routes>
         </Router>
     );
