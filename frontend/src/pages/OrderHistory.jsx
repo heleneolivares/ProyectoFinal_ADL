@@ -7,9 +7,9 @@ const OrderHistory = () => {
     const [orders, setOrders] = useState([
         {
             id: 101,
-            date: "2024-03-20",
+            date: "20-03-2024",
             total: 120.50,
-            status: "Completed",
+            status: "Completada",
             items: [
                 { id: 1, name: "POP! Spider-Man", price: 30.00, quantity: 2 },
                 { id: 2, name: "POP! Batman", price: 60.50, quantity: 1 },
@@ -17,9 +17,9 @@ const OrderHistory = () => {
         },
         {
             id: 102,
-            date: "2024-03-18",
+            date: "18-03-2024",
             total: 45.99,
-            status: "Pending",
+            status: "Pendiente",
             items: [
                 { id: 3, name: "POP! Iron Man", price: 45.99, quantity: 1 },
             ],
@@ -44,12 +44,12 @@ const OrderHistory = () => {
                 </ul>
             </div>
             <div className="col-md-9 p-3">
-                <h2>Order History</h2>
+                <h2>Historial de compras</h2>
                 <div className="d-flex flex-column gap-3">
                     {orders.length > 0 ? (
                         orders.map((order) => <Order key={order.id} order={order} />)
                     ) : (
-                        <p>No past orders found.</p>
+                        <p>No hay compras realizadas.</p>
                     )}
                 </div>
             </div>
