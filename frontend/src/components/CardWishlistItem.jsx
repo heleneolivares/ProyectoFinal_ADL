@@ -7,7 +7,7 @@ export default function CardWishlistItem({ product, darkMode }) {
             className={`card shadow-sm border-0 rounded-4 p-3 d-flex align-items-center ${
                 darkMode ? "bg-dark text-white" : "bg-white text-dark"
             }`}
-            style={{ maxWidth: "600px" }}
+            style={{ maxWidth: "900px" }}
         >
             {/* Wishlist Heart */}
             <div className="position-absolute top-0 end-0 p-2">
