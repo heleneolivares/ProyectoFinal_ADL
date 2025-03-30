@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+
 
 import "../assets/css/Login.css";
 
 export default function Login({ darkMode }) {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const { login } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from || "/"; // Default to home if no redirect path
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        const success = await login(email, password); // Perform login
+        if (success) {
+            navigate(from); // Redirect to the page they tried to access
+        } else {
+            alert("Invalid credentials");
+        }
+    };
+
     // Validation Schema with Yup
     const validationSchema = Yup.object({
         email: Yup.string().email("Invalid email").required("Email is required"),
@@ -29,10 +50,23 @@ export default function Login({ darkMode }) {
                         <Formik
                             initialValues={{ email: "", password: "", rememberMe: false }}
                             validationSchema={validationSchema}
+                            onSubmit={async (values, { setSubmitting }) => {
+                                const success = await login(values.email, values.password);
+                                if (success) {
+                                    navigate(from);
+                                } else {
+                                    alert("Invalid credentials");
+                                }
+                                setSubmitting(false);
+                            }}
+                        >
+                        {/* <Formik
+                            initialValues={{ email: "", password: "", rememberMe: false }}
+                            validationSchema={validationSchema}
                             onSubmit={(values) => {
                                 console.log("Form Submitted:", values);
                             }}
-                        >
+                        > */}
                             {({ isSubmitting }) => (
                                 <Form className="w-100">
                                     {/* Email Input */}

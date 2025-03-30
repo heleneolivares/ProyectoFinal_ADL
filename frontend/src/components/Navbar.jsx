@@ -1,7 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext"; // Your authentication context
 
+import "../assets/css/Navbar.css";
 export default function Navbar({ darkMode, setDarkMode }) {
+    const { cart, removeFromCart } = useCart();
+    const { user, logout } = useAuth(); 
+    const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+    
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleLogout = () => {
+        logout();  // Call logout function
+        navigate("/"); // Redirect to home after logout
+    };
+
+    const handleProtectedRoute = (path) => {
+        if (!user) {
+            navigate("/login", { state: { from: path } }); // Redirect to login with the intended path
+        } else {
+            navigate(path);
+        }
+    };
+
     useEffect(() => {
         // Apply dark/light mode to the body
         if (darkMode) {
@@ -35,15 +58,29 @@ export default function Navbar({ darkMode, setDarkMode }) {
 
             <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                {user ? (
+                    <li className="nav-item">
+                        <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
+                    </li>
+                ) : (
+                    <li className="nav-item">
+                        <Link className="btn btn-primary" to="/login">Login</Link>
+                    </li>
+                )}
+
+                {/* Wishlist Button */}
+                <button className="nav-link btn btn-link" onClick={() => handleProtectedRoute("/wishlist")}>
+                    Wishlist
+                </button>
                 <li className="nav-item">
-                    <Link className="nav-link" to="/login">Login</Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link" to="/wishlist">Wishlist</Link>
-                </li>
-                <li className="nav-item">
-                    <button className="nav-link btn btn-link" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-                    Cart
+                    {/* Cart Button with Badge */}
+                    <button className="btn btn-link nav-link position-relative" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                        Cart
+                        {cartCount > 0 && (
+                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {cartCount}
+                            </span>
+                        )}
                     </button>
                 </li>
 
@@ -98,12 +135,25 @@ export default function Navbar({ darkMode, setDarkMode }) {
         {/* Cart Offcanvas */}
         <div className={`offcanvas offcanvas-end ${darkMode ? "bg-dark text-light" : "bg-light text-dark"}`} id="cartOffcanvas">
             <div className="offcanvas-header">
-            <h5 className="offcanvas-title">🛒 Tu Carrito</h5>
-            <button type="button" className="btn-close" data-bs-dismiss="offcanvas"></button>
+                <h5 className="offcanvas-title">🛒 Tu Carrito</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="offcanvas"></button>
             </div>
             <div className="offcanvas-body">
-            <p>Aquí aparecerán los productos en el carrito...</p>
-            <button className="btn btn-success w-100">Finalizar compra</button>
+                {cart.length === 0 ? (
+                    <p>Tu carrito está vacío</p>
+                ) : (
+                    cart.map((item) => (
+                        <div key={item.id} className="d-flex justify-content-between align-items-center mb-2">
+                            <img src={item.image} alt={item.name} style={{ width: "50px", height: "50px" }} />
+                            <span>{item.name} x{item.quantity}</span>
+                            <button className="btn btn-danger btn-sm" onClick={() => removeFromCart(item.id)}>❌</button>
+                        </div>
+                    ))
+                )}
+                {/* Finalizar Compra Button */}
+                <button className="btn btn-success w-100" onClick={() => handleProtectedRoute("/checkout")}>
+                    Finalizar compra
+                </button>
             </div>
         </div>
         </>

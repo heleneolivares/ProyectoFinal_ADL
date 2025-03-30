@@ -1,7 +1,10 @@
 import React from "react";
+import { useCart } from "../context/CartContext";
 import "../assets/css/CardProduct.css";
 
 export default function CardProduct({ product, darkMode }) {
+    const { addToCart } = useCart();
+
     return (
         <div
             className={`card shadow-sm border-0 rounded-4 p-3 ${
@@ -29,7 +32,7 @@ export default function CardProduct({ product, darkMode }) {
                 <h6 className="text-uppercase fw-light">{product.brand}</h6>
                 <h5 className="fw-bold">{product.name}</h5>
                 <p className="fs-5 fw-bold">${product.price}</p>
-                <button className={`btn w-100 fw-bold ${darkMode ? "btn-light text-dark" : "btn-primary text-white"}`}>
+                <button onClick={() => addToCart(product)} className={`btn w-100 fw-bold ${darkMode ? "btn-light text-dark" : "btn-primary text-white"}`}>
                     Añadir al Carro
                 </button>
             </div>
