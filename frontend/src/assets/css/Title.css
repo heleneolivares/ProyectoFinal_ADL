@@ -1,0 +1,21 @@
+/* Default Title Styling */
+.title {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Sizes */
+.title.sm { font-size: 1.5rem; }
+.title.md { font-size: 2rem; }
+.title.lg { font-size: 2.5rem; }
+
+/* Alignment */
+.title.left { text-align: left; }
+.title.center { text-align: center; }
+.title.right { text-align: right; }
+
+/* Dark Mode */
+.dark-mode { color: white; }
+
+/* Light Mode */
+.light-mode { color: black; }
