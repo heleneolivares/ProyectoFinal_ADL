@@ -15,8 +15,8 @@ Al clonar o bajar el proyecto para inicializarlo se debe abrir la terminal en la
 
 ## Dependencias
 
-En caso de no contar con todas las dependencias instaladas, aqui el comando para instalarlas todas:
+El comando para instalarlas todas:
 
 ```terminal
-    npm install react-router-dom axios tailwindcss @headlessui/react @heroicons/react react-toastify react-icons zustand redux redux-toolkit jwt-decode yup formik react-hook-form helmet 
+    npm install
 ```
