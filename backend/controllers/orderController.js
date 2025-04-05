@@ -1,19 +1,19 @@
-// orderController.js
-const orderController = {
-    getAllOrders: async (req, res) => {
-        // Lógica para listar pedidos
-    },
-    getOrderById: async (req, res) => {
-        // Lógica para obtener un pedido por ID
-    },
-    createOrder: async (req, res) => {
-        // Lógica para crear un pedido
-    },
-    updateOrderStatus: async (req, res) => {
-        // Lógica para actualizar el estado de un pedido
-    }
+export const getOrders = (req, res) => {
+    res.status(200).json({ message: 'Órdenes del usuario', orders: [] });
 };
-
-module.exports = {
-    orderController,
+  
+export const getOrder = (req, res) => {
+    const orderId = req.params.id;
+    res.status(200).json({ message: `Orden con ID ${orderId}`, order: {} });
+};
+  
+export const createOrder = (req, res) => {
+    const newOrder = req.body;
+    res.status(201).json({ message: 'Orden creada', order: newOrder });
+};
+  
+export const updateOrder = (req, res) => {
+    const orderId = req.params.id;
+    const updateData = req.body;
+    res.status(200).json({ message: `Orden ${orderId} actualizada`, updateData });
 };

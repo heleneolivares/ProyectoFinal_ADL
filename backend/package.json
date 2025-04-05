@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Dentro de la carpeta frontend esta el desarrollo del front Dentro de la carpeta backend esta el desarrollo del back",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,19 +1,20 @@
-// cartController.js
-const cartController = {
-    getCart: async (req, res) => {
-        // Lógica para obtener el carrito del usuario
-    },
-    addToCart: async (req, res) => {
-        // Lógica para agregar un producto al carrito
-    },
-    updateCartItem: async (req, res) => {
-        // Lógica para actualizar la cantidad de un producto en el carrito
-    },
-    removeFromCart: async (req, res) => {
-        // Lógica para eliminar un producto del carrito
-    }
+export const getCart = (req, res) => {
+    res.status(200).json({ message: 'Carrito del usuario', cart: [] });
 };
-
-module.exports = {
-    cartController,
+  
+export const addToCart = (req, res) => {
+    const item = req.body;
+    res.status(201).json({ message: 'Producto agregado al carrito', item });
 };
+  
+export const updateCartItem = (req, res) => {
+    const itemId = req.params.id;
+    const updateData = req.body;
+    res.status(200).json({ message: `Producto del carrito ${itemId} actualizado`, updateData });
+};
+  
+export const removeCartItem = (req, res) => {
+    const itemId = req.params.id;
+    res.status(200).json({ message: `Producto del carrito ${itemId} eliminado` });
+};
+  

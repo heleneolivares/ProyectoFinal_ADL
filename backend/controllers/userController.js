@@ -1,16 +1,15 @@
-// userController.js
-const userController = {
-    getUser: async (req, res) => {
-        // Lógica para obtener un usuario por ID
-    },
-    updateUser: async (req, res) => {
-        // Lógica para actualizar un usuario
-    },
-    deleteUser: async (req, res) => {
-        // Lógica para eliminar un usuario
-    }
+export const getUser = (req, res) => {
+    const userId = req.params.id;
+    res.status(200).json({ message: `Usuario con ID ${userId}` });
 };
-
-module.exports = {
-    userController
+  
+export const updateUser = (req, res) => {
+    const userId = req.params.id;
+    const updateData = req.body;
+    res.status(200).json({ message: `Usuario ${userId} actualizado`, updateData });
+};
+  
+export const deleteUser = (req, res) => {
+    const userId = req.params.id;
+    res.status(200).json({ message: `Usuario ${userId} eliminado` });
 };

@@ -1,11 +1,12 @@
+// routes.js
 import express from 'express';
-import authController from '../controllers/authController.js';
-import userController from '../controllers/userController.js';
-import productController from '../controllers/productController.js';
-import cartController from '../controllers/cartController.js';
-import orderController from '../controllers/orderController.js';
-import favoriteController from '../controllers/favoriteController.js';
-import authMiddleware from '../middlewares/authMiddleware.js';
+import * as authController from './controllers/authController.js';
+import * as userController from './controllers/userController.js';
+import * as productController from './controllers/productController.js';
+import * as cartController from './controllers/cartController.js';
+import * as orderController from './controllers/orderController.js';
+import * as favoriteController from './controllers/favoriteController.js';
+import authMiddleware from './middlewares/authMiddleware.js';
 
 const router = express.Router();
 
