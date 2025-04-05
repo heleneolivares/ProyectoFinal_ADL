@@ -3,9 +3,9 @@
 Dentro de la carpeta frontend esta el desarrollo del front
 Dentro de la carpeta backend esta el desarrollo del back
 
-## Instalacion
+## Instalacion Frontend
 
-Al clonar o bajar el proyecto para inicializarlo se debe abrir la terminal en la carpeta del proyecto y ejecutar los siguientes comandos
+Al clonar o bajar el proyecto para inicializarlo se debe abrir la terminal en la carpeta frontend del proyecto y ejecutar los siguientes comandos
 
 ```terminal
     nvm use 23.10.0
@@ -13,10 +13,19 @@ Al clonar o bajar el proyecto para inicializarlo se debe abrir la terminal en la
     npm run dev
 ```
 
-## Dependencias
+## Instalacion Backend
 
-En caso de no contar con todas las dependencias instaladas, aqui el comando para instalarlas todas:
+### Prerequisitos
+
+- Tener instalado postgreSQL
+- Al clonar o bajar el proyecto revisar el archivo .env con el usuario y contrase˜ña correspondiente a tu propia DB
+- El archivo funko_marketplace.sql contiene las tablas y datos para la base de datos. Ejecutar este script antes de iniciar el proyecto.
+
+Luego puedes ejecutar los siguientes comandos desde la carpeta backend en tu terminal:
 
 ```terminal
-    npm install react-router-dom axios tailwindcss @headlessui/react @heroicons/react react-toastify react-icons zustand redux redux-toolkit jwt-decode yup formik react-hook-form helmet 
+    nvm use 23.10.0
+    npm install
+    node index.js
 ```
+
