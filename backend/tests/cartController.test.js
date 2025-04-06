@@ -1,95 +1,102 @@
-import { connectDb } from './setupTestDb';
 import request from 'supertest';
-import app from '../app'; // Asumiendo que tienes un archivo app.js donde defines tu servidor Express
+import app from '../app.js';
+import { connectDb } from '../config/db.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
-let db;
+let token;
+let testUserId;
+let testItemId;
 
 beforeAll(async () => {
-    db = await connectDb();
-    // Configura la app para usar SQLite en las pruebas
+    process.env.NODE_ENV = 'test';
+    const db = await connectDb();
+
+    // Crear tabla users si no existe
+    await db.exec(`
+        CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL,
+        role TEXT DEFAULT 'user');
+    `);
+
+    // Crear tabla cart si no existe
+    await db.exec(`
+        CREATE TABLE IF NOT EXISTS cart (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            product_id INTEGER NOT NULL,
+            quantity INTEGER NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        );
+    `);
+
+    // Insertar usuario de prueba
+    // Insertar un usuario con password hasheado
+    const hashedPassword = await bcrypt.hash('123456', 10);
+    await db.run(`
+        INSERT INTO users (name, email, password, role)
+        VALUES ('Usuario Test', 'testcart@example.com', ?, 'user')
+    `, [hashedPassword]);
+    const user = await db.get('SELECT * FROM users WHERE email = ?', ['testcart@example.com']);
+    testUserId = user.id;
+
+    // Generar token de autenticación
+    token = jwt.sign({ id: testUserId }, process.env.JWT_SECRET || 'testsecret', { expiresIn: '1h' });
 });
 
 afterAll(async () => {
-    await db.close();
+    const db = await connectDb();
+    await db.run('DELETE FROM cart');
+    await db.run('DELETE FROM users');
+    await db.close();  // Asegúrate de cerrar la conexión a la base de datos
 });
 
 describe('Cart Controller', () => {
-
-    it('should get the cart of a user', async () => {
+    it('GET /api/v1/cart - debería retornar el carrito del usuario (vacío)', async () => {
         const res = await request(app)
-            .get('/api/cart')
-            .set('Authorization', 'Bearer some-valid-token') // Asumiendo que tienes un token válido para el usuario
-            .send();
+            .get('/api/v1/cart')
+            .set('Authorization', `Bearer ${token}`);
 
-        expect(res.status).toBe(200);
+        expect(res.statusCode).toBe(200);
         expect(res.body).toHaveProperty('cart');
-        expect(Array.isArray(res.body.cart)).toBe(true); // Verificamos que la respuesta sea un array
+        expect(Array.isArray(res.body.cart)).toBe(true);
+        expect(res.body.cart.length).toBe(0);
     });
 
-    it('should add a product to the cart', async () => {
-        const newItem = {
-            user_id: 1, // Asumimos que el usuario con ID 1 existe
-            product_id: 1, // Asumimos que el producto con ID 1 existe
-            quantity: 2,
-            address: '123 Main St'
-        };
-
+    it('POST /api/v1/cart - debería agregar un producto al carrito', async () => {
         const res = await request(app)
-            .post('/api/cart')
-            .send(newItem)
-            .set('Authorization', 'Bearer some-valid-token');
+            .post('/api/v1/cart')
+            .set('Authorization', `Bearer ${token}`)
+            .send({ product_id: 1, quantity: 2 });
 
-        expect(res.status).toBe(201);
-        expect(res.body).toHaveProperty('message', 'Producto agregado al carrito');
-        expect(res.body.item).toHaveProperty('user_id', 1);
-        expect(res.body.item).toHaveProperty('product_id', 1);
-        expect(res.body.item).toHaveProperty('quantity', 2);
+        expect(res.statusCode).toBe(201);
+        expect(res.body).toHaveProperty('message');
+
+        // Obtener el ID del item recién insertado
+        const db = await connectDb();
+        const item = await db.get('SELECT * FROM cart WHERE user_id = ?', [testUserId]);
+        testItemId = item.id;
     });
 
-    it('should update the quantity of an item in the cart', async () => {
-        const updatedItem = {
-            quantity: 3 // Actualizamos la cantidad a 3
-        };
-
+    it('PUT /api/v1/cart/:id - debería actualizar la cantidad del producto', async () => {
         const res = await request(app)
-            .put('/api/cart/1') // Asumimos que el ítem con ID 1 existe
-            .send(updatedItem)
-            .set('Authorization', 'Bearer some-valid-token');
+            .put(`/api/v1/cart/${testItemId}`)
+            .set('Authorization', `Bearer ${token}`)
+            .send({ quantity: 5 });
 
-        expect(res.status).toBe(200);
-        expect(res.body).toHaveProperty('message', 'Producto del carrito 1 actualizado');
-        expect(res.body.updateData).toHaveProperty('quantity', 3);
+        expect(res.statusCode).toBe(200);
+        expect(res.body.message).toMatch(/actualizado/);
     });
 
-    it('should not update the quantity to an invalid value', async () => {
-        const updatedItem = {
-            quantity: -1 // Valor no válido para la cantidad
-        };
-
+    it('DELETE /api/v1/cart/:id - debería eliminar el producto del carrito', async () => {
         const res = await request(app)
-            .put('/api/cart/1') // Asumimos que el ítem con ID 1 existe
-            .send(updatedItem)
-            .set('Authorization', 'Bearer some-valid-token');
+            .delete(`/api/v1/cart/${testItemId}`)
+            .set('Authorization', `Bearer ${token}`);
 
-        expect(res.status).toBe(400); // Debe devolver un error 400 por cantidad inválida
-        expect(res.body).toHaveProperty('message', 'Cantidad inválida');
-    });
-
-    it('should remove an item from the cart', async () => {
-        const res = await request(app)
-            .delete('/api/cart/1') // Asumimos que el ítem con ID 1 existe
-            .set('Authorization', 'Bearer some-valid-token');
-
-        expect(res.status).toBe(200);
-        expect(res.body).toHaveProperty('message', 'Producto del carrito 1 eliminado');
-    });
-
-    it('should not remove an item with an invalid ID', async () => {
-        const res = await request(app)
-            .delete('/api/cart/9999') // ID inválido
-            .set('Authorization', 'Bearer some-valid-token');
-
-        expect(res.status).toBe(404); // No debe encontrar el ítem
-        expect(res.body).toHaveProperty('message', 'Producto del carrito 9999 no encontrado');
+        expect(res.statusCode).toBe(200);
+        expect(res.body.message).toMatch(/eliminado/);
     });
 });

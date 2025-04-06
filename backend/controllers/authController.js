@@ -48,7 +48,6 @@ export const register = async (req, res) => {
 // Login de usuario
 export const login = async (req, res) => {
     const { email, password } = req.body;
-
     try {
         // Establece la conexión a la base de datos si no se ha hecho
         if (!db) {
@@ -61,23 +60,22 @@ export const login = async (req, res) => {
             user = await db.get('SELECT * FROM users WHERE email = ?', [email]);
         } else {
             // Aquí va la lógica del login con la base de datos
-            const { email, password } = req.body;
+            //const { email, password } = req.body;
             const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
             
             if (result.rows.length === 0) {
                 return res.status(404).json({ message: 'Usuario no encontrado' });
             }
-            
             user = result.rows[0];
         }
 
         if (!user) {
-            return res.status(400).json({ message: 'Credenciales inválidas USUARIO' });
+            return res.status(401).json({ message: 'Credenciales inválidas' });
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (!passwordMatch) {
-            return res.status(400).json({ message: 'Credenciales inválidas PASSWORD' });
+            return res.status(401).json({ message: 'Credenciales inválidas' });
         }
 
         const token = jwt.sign(
