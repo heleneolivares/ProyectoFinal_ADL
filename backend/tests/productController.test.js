@@ -50,6 +50,7 @@ beforeAll(async () => {
 afterAll(async () => {
     const db = await connectDb();
     await db.run('DELETE FROM products');
+    await db.run('DELETE FROM users');
     await db.close();  // Asegúrate de cerrar la conexión a la base de datos
 });
 

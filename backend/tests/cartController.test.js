@@ -38,9 +38,9 @@ beforeAll(async () => {
     const hashedPassword = await bcrypt.hash('123456', 10);
     await db.run(`
         INSERT INTO users (name, email, password, role)
-        VALUES ('Usuario Test', 'testcart@example.com', ?, 'user')
+        VALUES ('Usuario Test', 'testcart2@example.com', ?, 'user')
     `, [hashedPassword]);
-    const user = await db.get('SELECT * FROM users WHERE email = ?', ['testcart@example.com']);
+    const user = await db.get('SELECT * FROM users WHERE email = ?', ['testcart2@example.com']);
     testUserId = user.id;
 
     // Generar token de autenticación
