@@ -42,9 +42,9 @@ Los tests estan montados para ejecutarse con SQLite en entorno de test y no con 
     npm test
 ```
 
-3. Luego de cada ejecucion de test es importante eliminar el archivo: ``` test.sqlite3```
+3. Luego de cada ejecucion de test es importante eliminar el archivo: ```test.sqlite3```
 
-## Para probar los endpoints con thunder client u postman
+## Para probar los endpoints con thunder client o postman
 
 ```terminal
     node index.js
