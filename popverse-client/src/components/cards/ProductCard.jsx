@@ -7,7 +7,7 @@ const ProductCard = ({ image, name, price }) => {
   return (
     <div
       className="card position-relative text-center border-0 shadow-sm product-card"
-      style={{ minWidth: "180px", transition: "all 0.3s" }}
+      style={{ maxWidth: "280px", transition: "all 0.3s" }}
     >
       <div
         onClick={() => setIsFav(!isFav)}

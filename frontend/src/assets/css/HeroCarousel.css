@@ -1,3 +1,21 @@
+.hero-wrapper {
+    padding: 0;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+  @media (max-width: 768px) {
+    .carousel-inner img {
+      height: 9vh; /* Puedes subir a 70vh o 80vh si quieres más alto */
+      
+    }
+  }
+
+  .carousel-inner img {
+    border-radius: 0 !important;
+  }
+  
+
+
 /* Light Mode: Dark arrows for visibility */
 .light-arrow {
     filter: invert(1); /* Makes the arrow black */
