@@ -9,23 +9,23 @@ export default function HeroCarousel({ darkMode }) {
                 <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" className={darkMode ? "active dark-indicator" : "active light-indicator"}></button>
                 <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" className={darkMode ? "dark-indicator" : "light-indicator"}></button>
                 <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" className={darkMode ? "dark-indicator" : "light-indicator"}></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3" className={darkMode ? "dark-indicator" : "light-indicator"}></button>
+                {/* <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3" className={darkMode ? "dark-indicator" : "light-indicator"}></button> */}
             </div>
 
             {/* Carousel Items */}
             <div className="carousel-inner">
                 <div className="carousel-item active">
-                    <img src="/images/hero1.jpg" className="d-block w-100" alt="Hero Image 1" />
+                    <img src="/hero1.png" className="d-block w-100 img-fluid" alt="Hero Image 1" />
                 </div>
                 <div className="carousel-item">
-                    <img src="/images/hero2.jpg" className="d-block w-100" alt="Hero Image 2" />
+                    <img src="/hero2.png" className="d-block w-100 img-fluid" alt="Hero Image 2" />
                 </div>
                 <div className="carousel-item">
-                    <img src="/images/hero3.jpg" className="d-block w-100" alt="Hero Image 3" />
+                    <img src="/hero3.png" className="d-block w-100 img-fluid" alt="Hero Image 3" />
                 </div>
-                <div className="carousel-item">
+                {/*<div className="carousel-item">
                     <img src="/images/hero4.jpg" className="d-block w-100" alt="Hero Image 4" />
-                </div>
+                </div>*/}
             </div>
 
             {/* Navigation Arrows */}

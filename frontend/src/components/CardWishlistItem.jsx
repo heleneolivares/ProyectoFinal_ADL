@@ -19,7 +19,7 @@ export default function CardWishlistItem({ product, darkMode }) {
             {/* Image */}
             <div className="flex-shrink-0">
                 <img
-                    src={product.image}
+                    src={product.image_url}
                     className="card-img-top"
                     alt={product.name}
                     style={{ objectFit: "contain", height: "120px", width: "120px" }}
@@ -30,7 +30,12 @@ export default function CardWishlistItem({ product, darkMode }) {
             <div className="card-body d-flex flex-column ms-3 text-center">
                 <h6 className="text-uppercase fw-light">{product.brand}</h6>
                 <h5 className="fw-bold">{product.name}</h5>
-                <p className="fs-5 fw-bold">${product.price}</p>
+                <p className="fs-5 fw-bold">
+                    {new Intl.NumberFormat(navigator.language, {
+                            style: "currency",
+                            currency: "CLP",
+                    }).format(product.price)}
+                </p>
                 <button
                     className={`btn w-100 fw-bold ${darkMode ? "btn-light text-dark" : "btn-primary text-white"}`}
                 >

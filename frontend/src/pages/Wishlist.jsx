@@ -8,14 +8,14 @@ const mockProducts = [
         id: 1,
         name: "POP! ACES HIGH EDDIE",
         brand: "Iron Maiden",
-        price: "16.990",
+        price: "16990",
         image: "https://your-image-url.com/eddie.png",
     },
     {
         id: 2,
         name: "POP! SPIDER-MAN",
         brand: "Marvel",
-        price: "17.500",
+        price: "17500",
         image: "https://your-image-url.com/spiderman.png",
     },
 ];

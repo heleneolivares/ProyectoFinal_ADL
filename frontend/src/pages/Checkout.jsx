@@ -36,9 +36,17 @@ export default function Checkout() {
                                 {cart.map((item) => (
                                     <tr key={item.id}>
                                         <td>{item.name}</td>
-                                        <td>${item.price}</td>
+                                        <td>
+                                            {new Intl.NumberFormat(navigator.language, {
+                                                style: "currency",
+                                                currency: "CLP",
+                                            }).format(item.price)}</td>
                                         <td>{item.quantity}</td>
-                                        <td>${(item.price * item.quantity).toFixed(2)}</td>
+                                        <td>
+                                            {new Intl.NumberFormat(navigator.language, {
+                                                style: "currency",
+                                                currency: "CLP",
+                                            }).format(item.price * item.quantity)}</td>
                                     </tr>
                                 ))}
                             </tbody>

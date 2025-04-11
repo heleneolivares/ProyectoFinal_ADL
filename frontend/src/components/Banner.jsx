@@ -1,13 +1,23 @@
 import React from "react";
 
-export default function Banner({ imageUrl, altText = "Banner" }) {
+export default function Banner({ src, altText = "Banner" }) {
     return (
-        <div className="w-full">
-            <img
-                src={imageUrl}
-                alt={altText}
-                className="w-full h-[300px] object-cover sm:h-[500px]"
-            />
+        <div
+            style={{
+                width: "100vw", // ancho igual al HeroCarousel
+                overflow: "hidden", // para evitar scroll horizontal si se pasa
+            }}
+        >
+        <img
+            src={src}
+            alt={altText}
+            style={{
+                width: "100%",
+                height: "auto",
+                objectFit: "cover",
+                display: "block",
+            }}
+        />
         </div>
     );
 }

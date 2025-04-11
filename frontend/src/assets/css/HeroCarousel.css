@@ -17,3 +17,8 @@
 .dark-indicator {
     background-color: white !important;
 }
+
+.carousel-item img {
+    max-height: 300px; /* Ajusta la altura máxima */
+    object-fit: cover; /* Ajusta cómo se recortan las imágenes */
+}

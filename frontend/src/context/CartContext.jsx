@@ -7,7 +7,7 @@ export function CartProvider({ children }) {
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
-        const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+        const storedCart = [];
         setCart(storedCart);
         calculateTotal(storedCart);
     }, []);

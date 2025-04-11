@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import CardProduct from "../components/CardProduct"; // Import your CardProduct component
+import { api } from "../services/api";
 
 const Category = ({ darkMode }) => {
     const { categoryName } = useParams(); // Capture the category name from the URL
@@ -9,21 +10,23 @@ const Category = ({ darkMode }) => {
     const [sortBy, setSortBy] = useState("price"); // Default sorting by price
     const [searchTerm, setSearchTerm] = useState(""); // Search term for filtering
 
-  // Mock product data (you can replace this with an API call)
-    const mockProducts = [
-        { id: 1, name: "Super Mario", price: 50, category: "videogames", image: "https://example.com/mario.png" },
-        { id: 2, name: "Dragon Ball Z", price: 30, category: "anime", image: "https://example.com/dbz.png" },
-        { id: 3, name: "Pokémon Pikachu", price: 40, category: "pokemon", image: "https://example.com/pikachu.png" },
-        { id: 4, name: "The Witcher 3", price: 60, category: "videogames", image: "https://example.com/witcher3.png" },
-        { id: 5, name: "Attack on Titan", price: 35, category: "anime", image: "https://example.com/aot.png" },
-        { id: 6, name: "Football - Messi Jersey", price: 100, category: "sport", image: "https://example.com/messi.png" },
-        // Add more mock products here as needed
-    ];
-
-  // Filter and sort products based on category and search term
     useEffect(() => {
-        const filtered = mockProducts.filter(
-            (product) => product.category === categoryName && product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        const fetchProducts = async () => {
+            try {
+                const response = await api.get("/products"); // Endpoint de productos
+                setProducts(response.data);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    // Filter and sort products based on category and search term
+    useEffect(() => {
+        const filtered = products.filter(
+            (product) => product.category.toLowerCase() === categoryName.toLowerCase() && product.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredProducts(filtered);
     }, [categoryName, searchTerm]);

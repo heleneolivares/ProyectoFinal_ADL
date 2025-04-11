@@ -48,114 +48,148 @@ export default function Navbar({ darkMode, setDarkMode }) {
 
     return (
         <>
-        <nav className={`navbar navbar-expand-lg ${darkMode ? "bg-dark navbar-dark" : "bg-light navbar-light"}`}>
-            <div className="container-fluid">
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-
-            <Link className="navbar-brand" to="/">PopVerse</Link>
-
-            <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                {user ? (
-                    <li className="nav-item">
-                        <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
-                    </li>
-                ) : (
-                    <li className="nav-item">
-                        <Link className="btn btn-primary" to="/login">Login</Link>
-                    </li>
-                )}
-
-                {/* Wishlist Button */}
-                <button className="nav-link btn btn-link" onClick={() => handleProtectedRoute("/wishlist")}>
-                    Wishlist
-                </button>
-                <li className="nav-item">
-                    {/* Cart Button with Badge */}
-                    <button className="btn btn-link nav-link position-relative" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-                        Cart
+          {/* NAVBAR MOBILE */}
+            <div className="d-flex d-lg-none flex-column px-3 py-2">
+                <div className="d-flex justify-content-between align-items-center w-100 mb-2">
+                    <div className="d-flex align-items-center gap-2">
+                        <button className={`btn p-0 ${darkMode ? "text-white" : "text-dark"}`} type="button" data-bs-toggle="collapse" data-bs-target="#navbarMobileMenu">
+                            <i className="bi bi-list fs-3"></i>
+                        </button>
+            
+                        {user ? (
+                            <button className="btn btn-danger btn-sm" onClick={handleLogout}>
+                                Logout
+                            </button>
+                        ) : (
+                            <Link className={`btn  ${darkMode ? "text-white" : "text-dark"} `} to="/login">
+                                Login
+                            </Link>
+                        )}
+                    </div>
+            
+                    <Link className={`fw-bold fs-4 text-decoration-none ${darkMode ? "text-white" : "text-dark"}`} to="/">
+                        PopVerse
+                    </Link>
+                </div>
+        
+                <div className="d-flex align-items-center w-100 gap-2 mb-2">
+                    <input className={`form-control ${darkMode ? "bg-light text-dark" : "bg-white text-dark"}`} type="text" placeholder="Buscador"/>
+                    <button className={`btn position-relative  ${darkMode ? "text-white" : "text-dark"} `} data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                        <i className="bi bi-cart"></i>
                         {cartCount > 0 && (
                             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 {cartCount}
                             </span>
                         )}
                     </button>
-                </li>
-
-                {/* Dropdown for Categories */}
-                <li className="nav-item dropdown d-lg-none">
-                    <button className={`nav-link dropdown-toggle btn btn-link ${darkMode ? "text-light" : "text-dark"}`} id="categoryDropdown" data-bs-toggle="dropdown">
-                    Categories
+                    <button className="btn " onClick={() => setDarkMode(!darkMode)}>
+                        {darkMode ? "☀️" : "🌙"}
                     </button>
-                    <ul className={`dropdown-menu ${darkMode ? "bg-dark text-light" : "bg-light text-dark"}`} aria-labelledby="categoryDropdown">
-                    {categories.map((category) => (
-                        <li key={category.name}>
-                        <Link className="dropdown-item" to={category.path}>{category.name}</Link>
-                        </li>
-                    ))}
+                </div>
+        
+                <div className="collapse" id="navbarMobileMenu">
+                    <ul className="navbar-nav">
+                        {categories.map((category) => (
+                            <li key={category.name}>
+                                <Link className="nav-link" to={category.path}>
+                                {category.name}
+                                </Link>
+                            </li>
+                        ))}
                     </ul>
-                </li>
-                </ul>
-
-                {/* Search Bar */}
-                <div className="container mt-2">
-                <div className="d-flex justify-content-center">
-                    <div className="input-group" style={{ maxWidth: "800px", width: "100%" }}>
-                    <input className={`form-control text-center fs-5 border-0 ${darkMode ? "bg-light" : "bg-outline"}`} type="text" placeholder="Buscador" aria-label="Search" />
-                    <button className={`btn ${darkMode ? "btn-light" : "btn-dark"} border-0`}>
-                        <i className="bi bi-search fs-5"></i>
+                </div>
+            </div>
+        
+            {/* NAVBAR DESKTOP */}
+            <nav className={`navbar navbar-expand-lg ${darkMode ? "bg-dark navbar-dark" : "bg-light navbar-light"} d-none d-lg-flex`}>
+                <div className="container-fluid">
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03">
+                        <span className="navbar-toggler-icon"></span>
                     </button>
+            
+                    <Link className={`navbar-brand fw-bold fs-4 ${darkMode ? "text-white" : "text-dark"}`} to="/">
+                        PopVerse
+                    </Link>
+            
+                    <div className="collapse navbar-collapse d-flex align-items-center justify-content-between" id="navbarTogglerDemo03">
+                        <div className="container mt-2">
+                            <div className="d-flex justify-content-center">
+                                <div className="input-group" style={{ maxWidth: "800px", width: "100%" }}>
+                                    <input className={`form-control text-center fs-5 border-0 ${darkMode ? "bg-light" : "bg-outline"}`} type="text" placeholder="Buscador" aria-label="Search"/>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div className="d-flex align-items-center gap-2 ms-auto">
+                            {user ? (
+                                <button className="btn btn-danger" onClick={handleLogout}>
+                                    Logout
+                                </button>
+                            ) : (
+                                <Link className={`btn  ${darkMode ? "text-white" : "text-dark"} `} to="/login">
+                                    Login
+                                </Link>
+                            )}
+            
+                            <button className={`btn  ${darkMode ? "text-white" : "text-dark"} `} onClick={() => handleProtectedRoute("/wishlist")}>
+                                Wishlist
+                            </button>
+            
+                            <button className={`btn position-relative ${darkMode ? "text-white" : "text-dark"} `} data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                                Cart
+                                {cartCount > 0 && (
+                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        {cartCount}
+                                    </span>
+                                )}
+                            </button>
+                
+                            <button className="btn " onClick={() => setDarkMode(!darkMode)}>
+                                {darkMode ? "🌞" : "🌙"}
+                            </button>
+                        </div>
                     </div>
                 </div>
-                </div>
-
-                {/* Dark Mode Button */}
-                <button className="btn btn-outline-secondary" onClick={() => setDarkMode(!darkMode)}>
-                {darkMode ? "☀️" : "🌙"}
-                </button>
-            </div>
-            </div>
-        </nav>
-
-        {/* Categories visible only on larger screens */}
-        <div className="container-fluid d-none d-lg-block">
-            <div className={`navbar navbar-expand-lg ${darkMode ? "bg-dark navbar-dark" : "bg-light navbar-light"}`}>
-            <ul className="navbar-nav w-100 d-flex justify-content-between">
+            </nav>
+        
+            {/* Categories shown below the full navbar on desktop only */}
+            <div className="container-fluid d-none d-lg-block mt-2">
+                <div className="d-flex justify-content-around">
                 {categories.map((category) => (
-                <li className="nav-item" key={category.name}>
-                    <Link className="nav-link" to={category.path}>{category.name}</Link>
-                </li>
+                    <Link key={category.name} className={`text-decoration-none fw-semibold ${darkMode ? "text-white" : "text-dark"}`} to={category.path}>
+                        {category.name}
+                    </Link>
                 ))}
-            </ul>
+                </div>
             </div>
-        </div>
-
-        {/* Cart Offcanvas */}
-        <div className={`offcanvas offcanvas-end ${darkMode ? "bg-dark text-light" : "bg-light text-dark"}`} id="cartOffcanvas">
-            <div className="offcanvas-header">
-                <h5 className="offcanvas-title">🛒 Tu Carrito</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="offcanvas"></button>
+        
+            {/* Offcanvas Cart */}
+            <div className={`offcanvas offcanvas-end ${darkMode ? "bg-dark text-light" : "bg-light text-dark"}`} id="cartOffcanvas">
+                <div className="offcanvas-header">
+                    <h5 className="offcanvas-title">🛒 Tu Carrito</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="offcanvas"></button>
+                </div>
+                <div className="offcanvas-body">
+                    {cart.length === 0 ? (
+                        <p>Tu carrito está vacío</p>
+                    ) : (
+                        cart.map((item) => (
+                            <div key={item.id} className="d-flex justify-content-between align-items-center mb-2">
+                                <img src={item.image_url} alt={item.name} style={{ width: "50px", height: "50px" }}/>
+                                <span>
+                                    {item.name} x{item.quantity}
+                                </span>
+                                <button className="btn btn-danger btn-sm" onClick={() => removeFromCart(item.id)}>
+                                    <i className="bi bi-trash text-white"></i>
+                                </button>
+                            </div>
+                        ))
+                    )}
+                    <button className="btn btn-success w-100 mt-3" onClick={() => handleProtectedRoute("/checkout")}>
+                        Finalizar compra
+                    </button>
+                </div>
             </div>
-            <div className="offcanvas-body">
-                {cart.length === 0 ? (
-                    <p>Tu carrito está vacío</p>
-                ) : (
-                    cart.map((item) => (
-                        <div key={item.id} className="d-flex justify-content-between align-items-center mb-2">
-                            <img src={item.image} alt={item.name} style={{ width: "50px", height: "50px" }} />
-                            <span>{item.name} x{item.quantity}</span>
-                            <button className="btn btn-danger btn-sm" onClick={() => removeFromCart(item.id)}>❌</button>
-                        </div>
-                    ))
-                )}
-                {/* Finalizar Compra Button */}
-                <button className="btn btn-success w-100" onClick={() => handleProtectedRoute("/checkout")}>
-                    Finalizar compra
-                </button>
-            </div>
-        </div>
         </>
     );
 }
