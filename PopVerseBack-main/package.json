@@ -1,0 +1,42 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "Dentro de la carpeta frontend esta el desarrollo del front Dentro de la carpeta backend esta el desarrollo del back",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "test": "jest",
+        "dev": "node index.js"
+    },
+    "jest": {
+        "testEnvironment": "node",
+        "verbose": true
+    },
+    "author": "Diego Araneda, Helene Olivares",
+    "license": "ISC",
+    "dependencies": {
+        "@babel/core": "^7.26.10",
+        "@babel/preset-env": "^7.26.9",
+        "babel-jest": "^29.7.0",
+        "bcryptjs": "^3.0.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.7",
+        "express": "^5.1.0",
+        "express-rate-limit": "^7.5.0",
+        "express-validator": "^7.2.1",
+        "helmet": "^8.1.0",
+        "jest": "^29.7.0",
+        "joi": "^17.13.3",
+        "jsonwebtoken": "^9.0.2",
+        "knex": "^3.1.0",
+        "morgan": "^1.10.0",
+        "multer": "^1.4.5-lts.2",
+        "passport": "^0.7.0",
+        "passport-facebook": "^3.0.0",
+        "passport-google-oauth20": "^2.0.0",
+        "pg": "^8.14.1",
+        "sqlite": "^5.1.1",
+        "sqlite3": "^5.1.7",
+        "supertest": "^7.1.0"
+    }
+}
