@@ -1,0 +1,24 @@
+/* Light Mode: Dark arrows for visibility */
+.light-arrow {
+    filter: invert(1); /* Makes the arrow black */
+}
+
+/* Dark Mode: Default white arrows */
+.dark-arrow {
+    filter: invert(0); /* Keeps default Bootstrap styling */
+}
+
+/* Light Mode: Dark indicators */
+.light-indicator {
+    background-color: black !important;
+}
+
+/* Dark Mode: Default white indicators */
+.dark-indicator {
+    background-color: white !important;
+}
+
+.carousel-item img {
+    max-height: 300px; /* Ajusta la altura máxima */
+    object-fit: cover; /* Ajusta cómo se recortan las imágenes */
+}

@@ -1,0 +1,28 @@
+.header{
+    margin: 0;
+}
+
+.message{
+    font-size: 1.5rem;
+    margin: 1 rem 0;
+}
+
+.emoji{
+    font-size: 3rem;
+    margin: 1rem 0;
+}
+
+.button{
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    background-color: #2130a9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover{
+    background-color: #0dcaf0;
+}
