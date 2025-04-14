@@ -7,10 +7,16 @@ export function CartProvider({ children }) {
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
-        const storedCart = [];
+        const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
         setCart(storedCart);
         calculateTotal(storedCart);
     }, []);
+
+    const saveCart = (updatedCart) => {
+        setCart(updatedCart);
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        calculateTotal(updatedCart);
+    };
 
     const addToCart = (product) => {
         const updatedCart = [...cart];
@@ -22,13 +28,22 @@ export function CartProvider({ children }) {
             updatedCart.push({ ...product, quantity: 1 });
         }
 
-        setCart(updatedCart);
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
-        calculateTotal(updatedCart);
+        saveCart(updatedCart);
     };
 
+    // ➖ Disminuir solo 1 unidad (pero no eliminar)
+    const removeOneFromCart = (id) => {
+        const updatedCart = cart.map((item) =>
+            item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+        ).filter((item) => item.quantity > 0);
+
+        saveCart(updatedCart);
+    };
+
+    // ❌ Eliminar el producto completamente
     const removeFromCart = (id) => {
-        setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+        const updatedCart = cart.filter((item) => item.id !== id);
+        saveCart(updatedCart);
     };
 
     const calculateTotal = (cartItems) => {
@@ -37,7 +52,9 @@ export function CartProvider({ children }) {
     };
 
     return (
-        <CartContext.Provider value={{ cart, total, addToCart, removeFromCart }}>
+        <CartContext.Provider
+            value={{ cart, total, addToCart, removeOneFromCart, removeFromCart }}
+        >
             {children}
         </CartContext.Provider>
     );

@@ -24,7 +24,7 @@ export default function Home({ darkMode }) {
   // 🧩 Función para determinar cuántos slides mostrar según tamaño de pantalla
   function getSlidesPerView() {
     const width = window.innerWidth;
-    if (width < 768) return 2;
+    if (width < 768) return 1;
     if (width < 992) return 3;
     return 4;
   }
@@ -74,12 +74,29 @@ export default function Home({ darkMode }) {
 
       {/* 🔥 NEW ARRIVALS */}
       <Title text="New Arrivals" size="lg" align="center" darkMode={darkMode} />
-      <div className="container py-4">
+      <div className="container py-4  px-3 mb-5">
+        {isMobile ? (
+          <Swiper
+            spaceBetween={10}
+            slidesPerView={1.2}
+            pagination={false} // ✅ quitar los puntitos aqui tambien
+            navigation={true}
+            modules={[Pagination, Navigation]}
+          >
+            {recentProducts.map((product) => (
+              <SwiperSlide key={product.id}>
+                <div className="d-flex justify-content-center mb-5">
+                  <CardProduct product={product} darkMode={darkMode} />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        ) : (
         <Swiper
           spaceBetween={10}
-          slidesPerView={slidesPerView} // ✅ dinámico
-          slidesPerGroup={1}
-          pagination={false} // ✅ sin puntitos abajo
+          slidesPerView={slidesPerView} 
+          slidesPerGroup={1} dinámico
+          pagination={false} 
           navigation={true}
           modules={[Pagination, Navigation]}
         >
@@ -91,9 +108,7 @@ export default function Home({ darkMode }) {
             </SwiperSlide>
           ))}
         </Swiper>
-
-        {/* Esto queda comentado por si decides usar grilla: */}
-        {/* <div className="row justify-content-center">...</div> */}
+        )}
       </div>
 
       {/* 🖼️ BANNER */}
@@ -112,7 +127,7 @@ export default function Home({ darkMode }) {
           >
             {discountProducts.map((product) => (
               <SwiperSlide key={product.id}>
-                <div className="d-flex justify-content-center">
+                <div className="d-flex justify-content-center mb-5">
                   <DiscountCardProduct product={product} darkMode={darkMode} />
                 </div>
               </SwiperSlide>
@@ -128,8 +143,10 @@ export default function Home({ darkMode }) {
           </div>
         )}
       </div>
-
       <Newsletter />
+
+
+
       <Footer darkMode={darkMode} />
     </div>
   );
