@@ -262,8 +262,24 @@ export default function Navbar({ darkMode, setDarkMode }) {
                 />
             ))
             )}
-          <button className="btn btn-success w-100 mt-3" onClick={() => handleProtectedRoute("/checkout")}>
-            Finalizar compra
+            <button
+            className="btn btn-success w-100 mt-3"
+            onClick={() => {
+              
+              const cartOffcanvasEl = document.getElementById("cartOffcanvas");
+              if (cartOffcanvasEl) {
+                const bsOffcanvas = window.bootstrap.Offcanvas.getInstance(cartOffcanvasEl);
+                if (bsOffcanvas) {
+                  bsOffcanvas.hide();
+                }
+              }
+
+            setTimeout(() => {
+              handleProtectedRoute("/checkout");
+            }, 400); 
+            }}
+            >
+              Finalizar compra
           </button>
         </div>
       </div>

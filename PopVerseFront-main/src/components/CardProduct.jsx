@@ -49,7 +49,6 @@ export default function CardProduct({ product, darkMode }) {
   const handleAddToCart = () => {
     addToCart(product);
 
-    // Abrir el carrito automáticamente
     const cartOffcanvasEl = document.getElementById("cartOffcanvas");
     if (cartOffcanvasEl) {
       const bsOffcanvas = new window.bootstrap.Offcanvas(cartOffcanvasEl);
